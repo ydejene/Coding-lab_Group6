@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# --- Get the directory of the current script ---
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" 
+
+#Base path for your hospital_data relative to SCRIPT_DIR
+HOSPITAL_DATA_BASE_PATH="${SCRIPT_DIR}"
+
+# Define directories for active logs and archive logs
+ACTIVE_LOGS_DIR="${HOSPITAL_DATA_BASE_PATH}/active_logs"
+
 # Function to display menu
 show_menu() {
     echo "Select log file to analyze:"
@@ -14,33 +23,37 @@ analyze_log() {
     local log_file=$1
     local log_type=$2
 
+    local full_source_file="${ACTIVE_LOGS_DIR}/${log_file}"
+    local full_reports_dir="${HOSPITAL_DATA_BASE_PATH}/reports"
+    
+
     # Check if log file exists
-    if [ ! -f "$log_file" ]; then
-        echo "Error: $log_file not found!"
+    if [ ! -f "$full_source_file" ]; then
+        echo "Error: $full_source_file not found!"
         return 1
     fi
 
-    if [ ! -s "$log_file" ]; then
-        echo "Warning: $log_file is empty!"
+    if [ ! -s "$full_source_file" ]; then
+        echo "Warning: $full_source_file is empty!"
         return 1
     fi
 
-    echo "Analyzing $log_type..."
+    echo "Analyzing $full_source_file..."
 
     # Create reports directory if it doesn't exist
-    mkdir -p reports
+    mkdir -p "$full_reports_dir"
 
     # Generate timestamp for report
     report_time=$(date "+%Y-%m-%d %H:%M:%S")
 
     # Append analysis header to report
-    echo "===========================================" >> reports/analysis_report.txt
-    echo "Analysis Report - $log_type" >> reports/analysis_report.txt
-    echo "Generated: $report_time" >> reports/analysis_report.txt
-    echo "===========================================" >> reports/analysis_report.txt
+    echo "===========================================" >> $full_reports_dir/analysis_report.txt
+    echo "Analysis Report - $full_source_file" >> $full_reports_dir/analysis_report.txt
+    echo "Generated: $report_time" >> $full_reports_dir/analysis_report.txt
+    echo "===========================================" >> $full_reports_dir/analysis_report.txt
 
     # Extract device names and count occurrences
-    echo "Device Statistics:" >> reports/analysis_report.txt
+    echo "Device Statistics:" >> $full_reports_dir/analysis_report.txt
     awk -F' - ' '{
         if (NF >= 2) {
             device = $2
@@ -59,16 +72,16 @@ analyze_log() {
             printf "  Last entry: %s\n", last_seen[device]
             printf "\n"
         }
-    }' "$log_file" >> reports/analysis_report.txt
+    }' "$full_source_file" >> $full_reports_dir/analysis_report.txt
 
     # Add summary statistics
-    total_entries=$(wc -l < "$log_file")
-    echo "Summary:" >> reports/analysis_report.txt
-    echo "  Total log entries: $total_entries" >> reports/analysis_report.txt
-    echo "  Log file: $log_file" >> reports/analysis_report.txt
-    echo "" >> reports/analysis_report.txt
+    total_entries=$(wc -l < "$full_source_file")
+    echo "Summary:" >> $full_reports_dir/analysis_report.txt
+    echo "  Total log entries: $total_entries" >> $full_reports_dir/analysis_report.txt
+    echo "  Log file: $full_source_file" >> $full_reports_dir/analysis_report.txt
+    echo "" >> $full_reports_dir/analysis_report.txt
 
-    echo "Analysis completed! Results appended to reports/analysis_report.txt"
+    echo "Analysis completed! Results appended to $full_reports_dir/analysis_report.txt"
 }
 
 # Function to validate input
@@ -93,13 +106,13 @@ main() {
 
     case $choice in
         1)
-            analyze_log "/Coding-lab_Group6/hospital_data/active_logs/heart_rate_log.log" "Heart Rate Log"
+            analyze_log "heart_rate_log.log" "Heart Rate Log"
             ;;
         2)
-            analyze_log "/Coding-lab_Group6/hospital_data/active_logs/temperature_log.log" "Temperature Log"
+            analyze_log "temperature_log.log" "Temperature Log"
             ;;
         3)
-            analyze_log "/Coding-lab_Group6/hospital_data/active_logs/water_usage_log.log" "Water Usage Log"
+            analyze_log "water_usage_log.log" "Water Usage Log"
             ;;
     esac
 }
