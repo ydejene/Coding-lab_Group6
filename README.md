@@ -1,142 +1,119 @@
-### Hospital Data Monitoring & Archival System
-**Coding Lab Group 6**
+Hospital Data Monitoring & Archival System
+Project Objective
+This project aims to develop an automated log management system for a hypothetical hospital environment. The system will collect real-time patient health metrics and resource usage data, provide controlled log archiving with user selection, and generate analytical reports showcasing device statistics and temporal patterns.
+The primary goal is to demonstrate proficiency in interactive shell scripting, log file processing, and data analysis using standard Linux command-line tools.
+Key Features 
+●	Shell Scripting Proficiency: Develop interactive scripts with user menus (select/case), master file operations (mv, touch, awk, grep), and implement robust error handling and input validation.
+●	Log Management & Automation: Design structured archival systems with timestamping, automate log rotation without disrupting active processes, and organize files into dedicated directories programmatically.
+●	Data Analysis with CLI Tools: Extract insights from logs using awk, sort, uniq, and head/tail, and generate formatted reports with device statistics.
+Team Members
+This project was developed by Group 6, comprising the following members:
+●	Abdul Kudus Zakaria Mukhtaru- Abdull-Kudus
+●	Yonas Getachew Dejene- ydejene
+●	Belyse Intwaza- belyse
+●	Guido Rene Kayigamba – ridaa11
+●	Ridaa Isaro - Guido
+●	Eloi Mizero- Mizero-eloi
 
-### Project Overview
+Getting Started
+Prerequisites
+●	A Unix-like operating system (Linux, macOS, WSL on Windows).
+●	Bash shell (version 4.x or higher recommended).
+●	Standard core utilities: mv, mkdir, touch, date, echo, read, awk, grep, sort, uniq, head, tail.
+●	Python 3 (for the data simulator scripts).
+Directory Structure Setup
+Before running any scripts, ensure your project adheres to the following directory structure within the Coding-lab_Group6 repository:
+Coding-lab_Group6/
+├── README.md
+└── hospital_data/
+         ├── archive_logs.sh
+         ├── analyze_logs.sh
+         ├── active_logs/
+         │   ├── heart_rate_log.log
+         │   ├── temperature_log.log
+         │   └── water_usage_log.log
+         └── archived_logs/
+         │       ├── heart_data_archive/
+         │       ├── temperature_data_archive/
+         │       └── water_data_archive/
+         └── reports/
+         │       └── analysis_report.txt
+         ├── heart_monitor.py
+         ├── temp_sensor.py
+         └── water_meter.py
 
-The Hospital Data Monitoring & Archival System is an automated log management solution designed to simulate real-world medical device data collection and analysis in healthcare environments. This system demonstrates enterprise-level data management practices used in hospitals and medical facilities worldwide.
+To set up the directories and initial empty log files:
+# Navigate to the root of your cloned repository
+cd Coding-lab_Group6
 
-### Project Objectives
+# Create necessary directories
+mkdir -p hospital_data/active_logs
+mkdir -p hospital_data/archive_logs/heart_data_archive
+mkdir -p hospital_data/archive_logs/temperature_data_archive
+mkdir -p hospital_data/archive_logs/water_data_archive
+mkdir -p hospital_data/reports
 
-This system addresses critical healthcare IT challenges by providing:
+Python Simulators (Data Collection)
+The project uses Python scripts to simulate real-time data collection into the active log files.
+To start collecting data, open three separate terminal windows and run each simulator:
+Terminal 1:
+python3 heart_monitor.py start
 
-- **Real-time Data Collection**: Continuous monitoring of patient health metrics and facility resource usage
-- **Intelligent Log Management**: Automated archival system to prevent data overflow and maintain system performance
-- **Data Analytics**: Comprehensive reporting on device performance and operational patterns
-- **System Administration**: Professional-grade scripts for healthcare IT staff
+Terminal 2:
+python3 temp_sensor.py start
 
-### Technical Implementation
+Terminal 3:
+python3 water_meter.py start
 
-### Core Technologies
+You can verify data collection by using tail -f on the log files:
+tail -f hospital_data/active_logs/heart_rate_log.log
+# Press Ctrl+C to exit tail
 
-- **Shell Scripting**: Interactive automation and system administration
-- **Python**: Device simulation and data generation
-- **Linux Tools**: Data processing with awk, grep, sort, and other utilities
-- **File System Management**: Log rotation, archival, and directory organization
+Script Permissions
+Ensure both Bash scripts are executable:
+chmod u+x archive_logs.sh
+chmod u+x analyze_logs.sh
 
-### System Architecture
+Usage
+1. archive_logs.sh: Interactive Archival Script
+This script allows you to selectively archive active log files.
+Running the script:
+./archive_logs.sh
 
-```
-Medical Devices → Data Collection → Log Management → Analysis & Reporting
-    (Python)      (Continuous)     (Shell Scripts)   (Automated Reports)
-```
+Example Interaction:
+Select log to archive:
+1) Heart Rate
+2) Temperature
+3) Water Usage
+Enter choice (1-3): 1
 
-### Simulated Medical Environment
+Archiving Heart Rate...
+Successfully archived to /path/to/your/repo/Codinglab_Group6/hospital_data/archive_logs/heart_data_archive/heart_rate_YYYY-MM-DD_HH:MM:SS.log
+Created new empty log file: /path/to/your/repo/Codinglab_Group6/hospital_data/active_logs/heart_rate_log.log
 
-The system replicates a hospital's critical monitoring infrastructure:
+2. analyze_logs.sh: Intelligent Analysis Script
+This script analyzes selected log files to count device occurrences and record temporal patterns, appending results to hospital_data/reports/analysis_report.txt.
+Running the script:
+./analyze_logs.sh
 
-### Patient Monitoring Systems
+Example Interaction:
+Select log file to analyze:
+1) Heart Rate 
+2) Temperature 
+3) Water Usage 
+Enter choice (1-3): 2
 
-- **Heart Rate Monitors**: Dual-device simulation tracking patient cardiac activity (60-100 BPM)
-- **Temperature Sensors**: Multi-sensor network monitoring patient body temperatures (36-39°C)
-- **Resource Management**: Water usage tracking for facility management (10-50 L/min)
+Example Analysis Output (appended to hospital_data/reports/analysis_report.txt):
+--- Analysis Report: YYYY-MM-DD HH:MM:SS ---
+Log Type: Temperature 
 
-### Data Characteristics
+Device Statistics:
+  Sensor_A: Total Count = 150 (First: YYYY-MM-DD HH:MM:SS, Last: YYYY-MM-DD HH:MM:SS)
+  Sensor_B: Total Count = 145 (First: YYYY-MM-DD HH:MM:SS, Last: YYYY-MM-DD HH:MM:SS)
+---------------------------------------------
 
-- Realistic medical value ranges based on clinical standards
-- Timestamp-based logging for temporal analysis
-- Multi-device simulation to represent actual hospital scale
-- Continuous 24/7 operation capability
+(The specific device names and counts will depend on the data generated by the Python simulators.)
+Commands Used
+Archival: date, mv, touch, select/case, test
+Analysis: awk, grep, sort, uniq, head, tail, echo, >>, date
 
-### Key Features
-
-### 1. Interactive Log Archival (`archive_logs.sh`)
-
-- **User-Friendly Interface**: Menu-driven selection system
-- **Intelligent Naming**: Timestamp-based archival with format `device_YYYY-MM-DD_HH:MM:SS.log`
-- **System Continuity**: Automatic creation of fresh log files for uninterrupted monitoring
-- **Error Handling**: Comprehensive validation and recovery mechanisms
-
-### 2. Advanced Data Analysis (`analyze_logs.sh`)
-
-- **Device Performance Metrics**: Statistical analysis of each monitoring device
-- **Temporal Pattern Recognition**: First/last entry tracking for operational insights
-- **Automated Reporting**: Professional-grade reports for administrative review
-- **Data Validation**: Input sanitization and file integrity checks
-
-### 3. Professional Data Management
-
-- **Scalable Architecture**: Modular design supporting multiple device types
-- **Audit Trail**: Complete logging history with archival timestamps
-- **Resource Optimization**: Efficient storage management and data rotation
-- **Compliance Ready**: Structured logging suitable for healthcare regulations
-
-### Real-World Applications
-
-This system mirrors data management challenges in:
-
-### Healthcare Industry
-
-- Hospital patient monitoring systems
-- Medical device performance tracking
-- Regulatory compliance documentation
-- Facility resource management
-
-### Enterprise Environments
-
-- Server log management in data centers
-- IoT device monitoring in smart buildings
-- Financial transaction logging in banking
-- Network performance monitoring in telecommunications
-
-### Skills Demonstrated
-
-### System Administration
-
-- Log file management and rotation strategies
-- Directory structure organization and maintenance
-- Automated backup and archival procedures
-- System monitoring and health checks
-
-### Data Engineering
-
-- Large-scale data processing with Unix/Linux tools
-- ETL (Extract, Transform, Load) operations
-- Data quality validation and error handling
-- Automated reporting and analytics pipelines
-
-### Software Development
-
-- Shell scripting for automation and administration
-- Python programming for data simulation
-- Error handling and user input validation
-- Modular code design and documentation
-
-### DevOps & Automation
-
-- Continuous monitoring system design
-- Automated deployment and configuration
-- System reliability and fault tolerance
-- Performance optimization and resource management
-
-### Learning Outcomes
-
-By completing this project, developers gain expertise in:
-
-- **Linux System Administration**: Professional-level command-line proficiency
-- **Data Pipeline Engineering**: Building automated data processing workflows
-- **Healthcare Technology**: Understanding medical device data management
-- **Quality Assurance**: Implementing robust error handling and validation
-- **Documentation Standards**: Creating professional technical documentation
-
-The project showcases enterprise-grade development practices essential for modern IT infrastructure and demonstrates readiness for professional software development roles in healthcare technology, DevOps, and data engineering.
-
-### Group Members
-
-- **Belyse Intwaza**
-- **Yonas Getachew Dejene**
-- **Eloi Mizero**
-- **Guido Rene Kayigamba**
-- **Ridaa Isaro**
-- **Abdul Kudus Zakaria Mukhtaru**
-
-*This project represents a comprehensive approach to healthcare data management, combining technical excellence with practical industry applications.*
