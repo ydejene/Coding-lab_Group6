@@ -50,3 +50,55 @@ Summary:
   Total log entries: 9
   Log file: Water Usage Log
 
+===========================================
+Analysis Report - Heart Rate Log
+Generated: 2025-06-06 09:04:02
+===========================================
+Device Statistics:
+Device: HeartRate_Monitor_A
+  Total entries: 54
+  First entry: 2025-06-06 08:58:42
+  Last entry: 2025-06-06 08:59:36
+
+Device: HeartRate_Monitor_B
+  Total entries: 54
+  First entry: 2025-06-06 08:58:42
+  Last entry: 2025-06-06 08:59:36
+
+Summary:
+  Total log entries: 108
+  Log file: Heart Rate Log
+
+===========================================
+Analysis Report - Temperature Log
+Generated: 2025-06-06 09:04:15
+===========================================
+Device Statistics:
+Device: Temp_Recorder_A
+  Total entries: 324
+  First entry: 2025-06-06 08:59:28
+  Last entry: 2025-06-06 09:04:14
+
+Device: Temp_Recorder_B
+  Total entries: 324
+  First entry: 2025-06-06 08:59:28
+  Last entry: 2025-06-06 09:04:14
+
+Summary:
+  Total log entries: 648
+  Log file: Temperature Log
+
+===========================================
+Analysis Report - Water Usage Log
+Generated: 2025-06-06 09:04:22
+===========================================
+Device Statistics:
+Device: Water_Consumption_Meter
+  Total entries: 63
+  First entry: 2025-06-06 09:02:12
+  Last entry: 2025-06-06 09:03:15
+
+Summary:
+  Total log entries: 63
+  Log file: Water Usage Log
+

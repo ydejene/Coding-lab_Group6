@@ -28,7 +28,7 @@ archive_log() {
 
 # Construct the full, relative paths within the function
     local full_source_file="${ACTIVE_LOGS_DIR}/${source_file_name}"
-    local full_archive_dir="${ARCHIVE_LOGS_ROOT_DIR}"
+    local full_archive_dir="${ARCHIVE_LOGS_ROOT_DIR}/${archive_dir}"
 
     # Check if source file exists and has content
     if [ ! -f "$full_source_file" ]; then
