@@ -21,7 +21,7 @@ show_menu() {
 # Function to analyze log file
 analyze_log() {
     local log_file=$1
-    local log_type=$2
+    local display_name=$2
 
     local full_source_file="${ACTIVE_LOGS_DIR}/${log_file}"
     local full_reports_dir="${HOSPITAL_DATA_BASE_PATH}/reports"
@@ -38,7 +38,7 @@ analyze_log() {
         return 1
     fi
 
-    echo "Analyzing $full_source_file..."
+    echo "Analyzing: $display_name ..."
 
     # Create reports directory if it doesn't exist
     mkdir -p "$full_reports_dir"
@@ -48,28 +48,36 @@ analyze_log() {
 
     # Append analysis header to report
     echo "===========================================" >> $full_reports_dir/analysis_report.txt
-    echo "Analysis Report - $full_source_file" >> $full_reports_dir/analysis_report.txt
+    echo "Analysis Report - $display_name" >> $full_reports_dir/analysis_report.txt
     echo "Generated: $report_time" >> $full_reports_dir/analysis_report.txt
     echo "===========================================" >> $full_reports_dir/analysis_report.txt
 
     # Extract device names and count occurrences
     echo "Device Statistics:" >> $full_reports_dir/analysis_report.txt
-    awk -F' - ' '{
-        if (NF >= 2) {
-            device = $2
-            gsub(/:.*/, "", device)  # Remove everything after ":"
-            count[device]++
-            if (!first_seen[device]) {
-                first_seen[device] = $1
+    awk '{
+        # combine date ($1) and time ($2) to get the full timestamp string
+        timestamp= $1 " " $2
+        #Device ID is the third field ($3)
+        device_id = $3
+
+        # Increment occurrences count for each device
+        count[device_id]++
+
+        # Store first seen timestamp for each device
+        # Check if the device_id is not already a key in 'first_seen' array
+            if (!(device_id in first_seen)) {
+                first_seen[device_id] = timestamp
             }
-            last_seen[device] = $1
-        }
+        # Updating last seen timestamp for each device
+            last_seen[device_id] = timestamp
+        
     } END {
-        for (device in count) {
-            printf "Device: %s\n", device
-            printf "  Total entries: %d\n", count[device]
-            printf "  First entry: %s\n", first_seen[device]
-            printf "  Last entry: %s\n", last_seen[device]
+        # Iterating through each unique device IDs collected 
+        for (device_id in count) {
+            printf "Device: %s\n", device_id
+            printf "  Total entries: %d\n", count[device_id]
+            printf "  First entry: %s\n", first_seen[device_id]
+            printf "  Last entry: %s\n", last_seen[device_id]
             printf "\n"
         }
     }' "$full_source_file" >> $full_reports_dir/analysis_report.txt
@@ -78,7 +86,7 @@ analyze_log() {
     total_entries=$(wc -l < "$full_source_file")
     echo "Summary:" >> $full_reports_dir/analysis_report.txt
     echo "  Total log entries: $total_entries" >> $full_reports_dir/analysis_report.txt
-    echo "  Log file: $full_source_file" >> $full_reports_dir/analysis_report.txt
+    echo "  Log file: $display_name" >> $full_reports_dir/analysis_report.txt
     echo "" >> $full_reports_dir/analysis_report.txt
 
     echo "Analysis completed! Results appended to $full_reports_dir/analysis_report.txt"
