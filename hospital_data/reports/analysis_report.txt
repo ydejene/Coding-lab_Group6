@@ -1,27 +1,52 @@
 ===========================================
-Analysis Report - /home/group-work/Coding-lab_Group6/hospital_data/active_logs/heart_rate_log.log
-Generated: 2025-06-05 11:33:15
+Analysis Report - Heart Rate Log
+Generated: 2025-06-06 07:46:06
 ===========================================
 Device Statistics:
+Device: HeartRate_Monitor_A
+  Total entries: 6
+  First entry: 2025-06-06 07:41:57
+  Last entry: 2025-06-06 07:42:02
+
+Device: HeartRate_Monitor_B
+  Total entries: 6
+  First entry: 2025-06-06 07:41:57
+  Last entry: 2025-06-06 07:42:02
+
 Summary:
-  Total log entries: 5188
-  Log file: /home/group-work/Coding-lab_Group6/hospital_data/active_logs/heart_rate_log.log
+  Total log entries: 12
+  Log file: Heart Rate Log
 
 ===========================================
-Analysis Report - /home/group-work/Coding-lab_Group6/hospital_data/active_logs/temperature_log.log
-Generated: 2025-06-05 11:33:22
+Analysis Report - Temperature Log
+Generated: 2025-06-06 07:46:34
 ===========================================
 Device Statistics:
+Device: Temp_Recorder_A
+  Total entries: 7
+  First entry: 2025-06-06 07:42:14
+  Last entry: 2025-06-06 07:42:20
+
+Device: Temp_Recorder_B
+  Total entries: 7
+  First entry: 2025-06-06 07:42:14
+  Last entry: 2025-06-06 07:42:20
+
 Summary:
-  Total log entries: 186
-  Log file: /home/group-work/Coding-lab_Group6/hospital_data/active_logs/temperature_log.log
+  Total log entries: 14
+  Log file: Temperature Log
 
 ===========================================
-Analysis Report - /home/group-work/Coding-lab_Group6/hospital_data/active_logs/water_usage_log.log
-Generated: 2025-06-05 11:33:31
+Analysis Report - Water Usage Log
+Generated: 2025-06-06 07:46:47
 ===========================================
 Device Statistics:
+Device: Water_Consumption_Meter
+  Total entries: 9
+  First entry: 2025-06-06 07:42:36
+  Last entry: 2025-06-06 07:42:44
+
 Summary:
-  Total log entries: 69
-  Log file: /home/group-work/Coding-lab_Group6/hospital_data/active_logs/water_usage_log.log
+  Total log entries: 9
+  Log file: Water Usage Log
 
