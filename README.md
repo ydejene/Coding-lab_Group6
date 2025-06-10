@@ -1,28 +1,52 @@
-Hospital Data Monitoring & Archival System
-Project Objective
+# Hospital Data Monitoring & Archival System
+
+## Project Objective
+
 This project aims to develop an automated log management system for a hypothetical hospital environment. The system will collect real-time patient health metrics and resource usage data, provide controlled log archiving with user selection, and generate analytical reports showcasing device statistics and temporal patterns.
+
 The primary goal is to demonstrate proficiency in interactive shell scripting, log file processing, and data analysis using standard Linux command-line tools.
-Key Features 
+
+## Key Features 
+
 ●	Shell Scripting Proficiency: Develop interactive scripts with user menus (select/case), master file operations (mv, touch, awk, grep), and implement robust error handling and input validation.
+
 ●	Log Management & Automation: Design structured archival systems with timestamping, automate log rotation without disrupting active processes, and organize files into dedicated directories programmatically.
+
 ●	Data Analysis with CLI Tools: Extract insights from logs using awk, sort, uniq, and head/tail, and generate formatted reports with device statistics.
-Team Members
+
+## Team Members
+
 This project was developed by Group 6, comprising the following members:
+
 ●	Abdul Kudus Zakaria Mukhtaru- Abdull-Kudus
+
 ●	Yonas Getachew Dejene- ydejene
+
 ●	Belyse Intwaza- belyse
+
 ●	Guido Rene Kayigamba – ridaa11
+
 ●	Ridaa Isaro - Guido
+
 ●	Eloi Mizero- Mizero-eloi
 
-Getting Started
-Prerequisites
+## Getting Started
+
+### Prerequisites
+
 ●	A Unix-like operating system (Linux, macOS, WSL on Windows).
+
 ●	Bash shell (version 4.x or higher recommended).
+
 ●	Standard core utilities: mv, mkdir, touch, date, echo, read, awk, grep, sort, uniq, head, tail.
+
 ●	Python 3 (for the data simulator scripts).
-Directory Structure Setup
+
+### Directory Structure Setup
+
 Before running any scripts, ensure your project adheres to the following directory structure within the Coding-lab_Group6 repository:
+
+```
 Coding-lab_Group6/
 ├── README.md
 └── hospital_data/
@@ -41,8 +65,11 @@ Coding-lab_Group6/
          ├── heart_monitor.py
          ├── temp_sensor.py
          └── water_meter.py
+```
 
 To set up the directories and initial empty log files:
+
+```bash
 # Navigate to the root of your cloned repository
 cd Coding-lab_Group6
 
@@ -52,35 +79,56 @@ mkdir -p hospital_data/archive_logs/heart_data_archive
 mkdir -p hospital_data/archive_logs/temperature_data_archive
 mkdir -p hospital_data/archive_logs/water_data_archive
 mkdir -p hospital_data/reports
+```
 
-Python Simulators (Data Collection)
+## Python Simulators (Data Collection)
+
 The project uses Python scripts to simulate real-time data collection into the active log files.
+
 To start collecting data, open three separate terminal windows and run each simulator:
+
 Terminal 1:
+```bash
 python3 heart_monitor.py start
+```
 
 Terminal 2:
+```bash
 python3 temp_sensor.py start
+```
 
 Terminal 3:
+```bash
 python3 water_meter.py start
+```
 
 You can verify data collection by using tail -f on the log files:
+```bash
 tail -f hospital_data/active_logs/heart_rate_log.log
 # Press Ctrl+C to exit tail
+```
 
-Script Permissions
+## Script Permissions
+
 Ensure both Bash scripts are executable:
+```bash
 chmod u+x archive_logs.sh
 chmod u+x analyze_logs.sh
+```
 
-Usage
-1. archive_logs.sh: Interactive Archival Script
+## Usage
+
+### 1. archive_logs.sh: Interactive Archival Script
+
 This script allows you to selectively archive active log files.
+
 Running the script:
+```bash
 ./archive_logs.sh
+```
 
 Example Interaction:
+```
 Select log to archive:
 1) Heart Rate
 2) Temperature
@@ -90,20 +138,28 @@ Enter choice (1-3): 1
 Archiving Heart Rate...
 Successfully archived to /path/to/your/repo/Codinglab_Group6/hospital_data/archive_logs/heart_data_archive/heart_rate_YYYY-MM-DD_HH:MM:SS.log
 Created new empty log file: /path/to/your/repo/Codinglab_Group6/hospital_data/active_logs/heart_rate_log.log
+```
 
-2. analyze_logs.sh: Intelligent Analysis Script
+### 2. analyze_logs.sh: Intelligent Analysis Script
+
 This script analyzes selected log files to count device occurrences and record temporal patterns, appending results to hospital_data/reports/analysis_report.txt.
+
 Running the script:
+```bash
 ./analyze_logs.sh
+```
 
 Example Interaction:
+```
 Select log file to analyze:
 1) Heart Rate 
 2) Temperature 
 3) Water Usage 
 Enter choice (1-3): 2
+```
 
 Example Analysis Output (appended to hospital_data/reports/analysis_report.txt):
+```
 --- Analysis Report: YYYY-MM-DD HH:MM:SS ---
 Log Type: Temperature 
 
@@ -111,7 +167,11 @@ Device Statistics:
   Sensor_A: Total Count = 150 (First: YYYY-MM-DD HH:MM:SS, Last: YYYY-MM-DD HH:MM:SS)
   Sensor_B: Total Count = 145 (First: YYYY-MM-DD HH:MM:SS, Last: YYYY-MM-DD HH:MM:SS)
 ---------------------------------------------
+```
 (The specific device names and counts will depend on the data generated by the Python simulators.)
-Commands Used
+
+## Commands Used
+
 Archival: date, mv, touch, select/case, test
+
 Analysis: awk, grep, sort, uniq, head, tail, echo, >>, date
